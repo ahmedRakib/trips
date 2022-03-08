@@ -9,7 +9,7 @@ namespace Trips.Data
 
         void Add(Trip trip);
 
-        void Update(int tripId, Trip trip);
+        Trip Update(Trip trip, int tripId);
 
         void Delete(int tripId);
     }

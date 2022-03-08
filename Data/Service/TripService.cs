@@ -1,35 +1,47 @@
 using System.Collections.Generic;
+using System.Linq;
+using Trips.Data;
 
 namespace Trips.Data
 {
     public class TripService : ITripService 
     {
-        public List<Trip> GetAllTrips()
-        {
-            //code to get all trips
-
-            return null;
-        }
-
+        public List<Trip> GetAllTrips() => DummyData.Trips.ToList();
         public Trip Get(int tripId)
         {
             //code to get a single trip
-
-            return null;
+            var trip = DummyData.Trips.FirstOrDefault(t => t.Id == tripId);
+            return trip;
         }
         public void Add(Trip trip)
         {
-            //code to save trip
+            DummyData.Trips.Add(trip);
         }
 
-        public void Update(int tripId, Trip trip)
+        public Trip Update(Trip trip, int tripId)
         {
-            //code to update a trip
+            
+            Trip oldTrip = DummyData.Trips.FirstOrDefault(t => t.Id == tripId);
+
+            if(oldTrip != null)
+            {
+                oldTrip.Name = trip.Name;
+                oldTrip.Description = trip.Description;
+                oldTrip.DateStarted = trip.DateStarted;
+                oldTrip.DateCompleted = trip.DateCompleted;
+                
+                DummyData.Trips.Add(oldTrip);
+            }
+            return trip;
         }
 
         public void Delete(int tripId)
         {
-            //code to delete a trip
+            var trip = DummyData.Trips.FirstOrDefault(t => t.Id == tripId);
+            if(trip != null)
+            {
+                DummyData.Trips.Remove(trip);           
+            }
         }
     }
 }
