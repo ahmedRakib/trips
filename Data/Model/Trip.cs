@@ -2,7 +2,7 @@ using System;
 
 namespace   Trips.Data
 {
-    public class Trips
+    public class Trip
     {
         public int  Id { get; set; }
 
@@ -10,8 +10,8 @@ namespace   Trips.Data
 
         public string Description { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime DateStarted { get; set; }
 
-        public DateTime? CompletedDate { get; set; }
+        public DateTime? DateCompleted { get; set; }
     }
 }
