@@ -5,14 +5,21 @@ export class Trips extends Component
 {
     constructor(props){
         super(props);
+        this.handleUpdate = this.handleUpdate.bind(this);
+
         this.state = {
             trips: [],
-            loading: true
+            loading: false
         }
     }
 
     componentDidMount(){
          this.populateTrips();
+    }
+
+    handleUpdate(id){
+        const {history} = this.props;
+        history.push("update/"+ id);
     }
 
     populateTrips(){
@@ -47,7 +54,11 @@ export class Trips extends Component
                         <td>a</td>
                         <td>a</td>
                         <td>a</td>
-                        <td>-</td>
+                        <td>
+                            <div className="form-group">
+                                <button onClick= {() => {this.handleUpdate(1)}} className="btn btn-success"> Edit </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
