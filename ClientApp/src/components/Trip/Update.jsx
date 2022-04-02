@@ -59,11 +59,10 @@ export class Update extends Component{
         const  {id} = this.props.match.params;
 
         const tripObj = {
-            Id: Math.floor(Math.random()*1000),
             name: this.state.name,
             description: this.state.description,
-            dateStarted: this.state.dateStarted,
-            dateCompleted: this.state.dateCompleted
+            dateStarted: new Date (this.state.dateStarted).toISOString(),
+            dateCompleted: this.state.dateCompleted ? new Date (this.state.dateCompleted).toISOString() : null
         }
 
         axios.put("api/trip/" + id, tripObj).then( result => {
