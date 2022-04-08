@@ -6,6 +6,7 @@ export class Trips extends Component
     constructor(props){
         super(props);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             trips: [],
@@ -20,6 +21,11 @@ export class Trips extends Component
     handleUpdate(id){
         const {history} = this.props;
         history.push("update/"+ id);
+    }
+
+    handleDelete(id){
+        const { history } = this.props;
+        history.push("delete/" + id);
     }
 
     populateTrips(){
@@ -57,6 +63,9 @@ export class Trips extends Component
                         <td>
                             <div className="form-group">
                                 <button onClick= {() => {this.handleUpdate(1)}} className="btn btn-success"> Edit </button>
+                            </div>
+                            <div className="form-group">
+                                <button onClick= {() => {this.handleDelete(1)}} className="btn btn-danger"> Delete </button>
                             </div>
                         </td>
                     </tr>
