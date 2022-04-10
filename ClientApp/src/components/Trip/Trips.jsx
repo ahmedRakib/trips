@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {getAllTrips} from '../../actions/tripAction.js'
 
 export class Trips extends Component 
 {
@@ -15,7 +17,14 @@ export class Trips extends Component
     }
 
     componentDidMount(){
-         this.populateTrips();
+         this.props.getAllTrips();
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.trips.data !== this.props.trips.data)
+        {
+            this.setState({trips: this.props.trips.data})
+        }
     }
 
     handleUpdate(id){
@@ -27,14 +36,6 @@ export class Trips extends Component
         const { history } = this.props;
         history.push("delete/" + id);
     }
-
-    populateTrips(){
-        axios.get("trip").then(res => {
-         const response = res.data;
-         this.setState({trips: response, loading: false})    
-        })
-    };
-
     renderAllTripsTable(trips){
         return(
             <table className="table table-stripped">
@@ -76,14 +77,12 @@ export class Trips extends Component
 
 
     render(){
-        let content = this.state.loading ? (
-            <p>
-                Loading ....
-            </p>
+        let content = this.props.trips.loading ?
+        (
+            <p> Loading ...</p>
         ) : (
-            this.renderAllTripsTable(this.state.trips)
-        )
-
+            this.state.trips.length && this.renderAllTripsTable(this.state.trips)
+        );
         return(
           <div>
           <h1>All trips</h1>
@@ -92,3 +91,9 @@ export class Trips extends Component
         );
     }
 }
+
+const mapStateToProps = ({trips}) => ({
+    trips
+});
+
+export default connect(mapStateToProps, { getAllTrips})(Trips);
